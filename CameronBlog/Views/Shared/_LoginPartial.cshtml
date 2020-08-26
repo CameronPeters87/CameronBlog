@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    if (User.IsInRole("Writer"))
+    {
+        <li class="nav-item">
+            <a class="nav-item"
+               href="@Url.Action("Index", "Dashboard", new { area = "Writer" })">
+                <span class="fa fa-tachometer-alt fa-2x" style="color:greenyellow"></span>
+            </a>
+        </li>
+        @*using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            {
+                @Html.AntiForgeryToken()
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="javascript:document.getElementById('logoutForm').submit()">
+                        Log off
+                    </a>
+                </li>
+            }*@
+    }
+
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Login", "Account")">Login</a>
+    </li>
+}

@@ -1,0 +1,133 @@
+﻿@model CameronBlog.Models.ViewModels.PostCreateViewModel
+
+@{
+    ViewBag.Title = "CreatePost";
+    Layout = "~/Areas/Writer/Views/Shared/_WriterLayout.cshtml";
+}
+
+<h2>Create Post</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
+@using (Html.BeginForm("CreatePost", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Article, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div ass="col-md-10">
+                @Html.TextAreaFor(model => model.Article, new
+           {
+               @id = "FullArticle",
+               @class = "form-control",
+               @rows = "200"
+           })
+                @Html.ValidationMessageFor(model => model.Article, "", new { @class = "text-danger" })
+                <script>
+                    CKEDITOR.replace("FullArticle");
+                </script>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Background Image: </label>
+            @Html.TextBoxFor(x => x.BackgroundImage, "", new
+            {
+                type = "file",
+                accept = "image/gif,image/jpeg,image/png"
+            })
+            @Html.ValidationMessageFor(model => model.BackgroundImage, "", new { @class = "text-danger" })
+            <br />
+        </div>
+
+        <img id="imgpreview" src="/Content/Theme/img/post-bg.jpg" width="200" height="125" alt="Background Image" /> <br />
+
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.LabelFor(model => model.AnonymousAuthor, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AnonymousAuthor)
+                    @Html.ValidationMessageFor(model => model.AnonymousAuthor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section scripts {
+
+    <script>
+
+        $(function () {
+
+            /*
+             * Preview Selected Image
+             */
+
+            function readUrl(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $("img#imgpreview")
+                            .attr("src", e.target.result)
+                            .width(200)
+                            .height(125);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#BackgroundImage").change(function () {
+                readUrl(this);
+            });
+
+            ///////////////////////////////////////////////
+        });
+
+    </script>
+}

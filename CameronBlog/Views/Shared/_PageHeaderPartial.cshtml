@@ -1,0 +1,52 @@
+﻿@model CameronBlog.Models.ViewModels.PageHeaderVM
+
+@if (!Model.isPost)
+{
+    <header class="masthead" style="background-image: url(@Model.ImageUrl)">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="site-heading">
+                        <h1>@Model.Title</h1>
+                        <span class="subheading">@Model.Description</span>
+                        @if (Model.atHome)
+                        {
+                            <div class="register-button">
+                                <a type="button" class="btn btn-primary"
+                                   href="@Url.Action("Register", "Account")">
+                                    Become a Writer
+                                </a>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-2 mx-auto">
+
+                </div>
+            </div>
+        </div>
+    </header>
+}
+else
+{
+    <header class="masthead" style="background-image: url('@Model.ImageUrl')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>@Model.Title</h1>
+                        <h2 class="subheading">@Model.Description</h2>
+                        <span class="meta">
+                            Posted by
+                            <a href="#">@Model.Author</a>
+                            on @Model.DatePosted
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+}

@@ -1,0 +1,26 @@
+﻿        [Required(ErrorMessage = "Please select Image.")]
+        public HttpPostedFileBase BackgroundImage { get; set; }
+        [Required(ErrorMessage = "Please select Image.")]
+        public HttpPostedFileBase ThumbnailImage { get; set; }
+
+    <div class="form-group">
+            <label class="control-label col-md-2">Thumbnail Image: </label>
+            @Html.TextBoxFor(x => x.ThumbnailImage, "", new
+            {
+                type = "file",
+                accept = "image/gif,image/jpeg,image/png"
+            })
+            @Html.ValidationMessageFor(model => model.ThumbnailImage, "", new { @class = "text-danger" })
+            <br />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Background Image: </label>
+        @Html.TextBoxFor(x => x.BackgroundImage, "", new
+        {
+            type = "file",
+            accept = "image/gif,image/jpeg,image/png"
+        })
+        @Html.ValidationMessageFor(model => model.BackgroundImage, "", new { @class = "text-danger" })
+        <br />
+    </div>
